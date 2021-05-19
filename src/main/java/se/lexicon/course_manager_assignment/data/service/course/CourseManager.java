@@ -64,7 +64,7 @@ public class CourseManager implements CourseService {
     @Override
     public List<CourseView> searchByDateAfter(LocalDate start) {
 
-        return converters.coursesToCourseViews(courseDao.findByDateAfter(start))
+        return converters.coursesToCourseViews(courseDao.findByDateAfter(start));
 
     }
 
@@ -97,11 +97,14 @@ public class CourseManager implements CourseService {
 
     @Override
     public List<CourseView> findByStudentId(int studentId) {
-        return null;
+
+        return converters.coursesToCourseViews(courseDao.findByStudentId(studentId));
     }
 
     @Override
     public boolean deleteCourse(int id) {
-        return false;
+
+        return courseDao.removeCourse(courseDao.findById(id));
+
     }
 }
