@@ -33,17 +33,25 @@ public class StudentManager implements StudentService {
     @Override
     public StudentView create(CreateStudentForm form) {
 
-        return new StudentView(form.getId(), form.getName(), form.getEmail(),form.getAddress());
+        Student student = studentDao.createStudent(form.getName(), form.getEmail(),form.getAddress());
+        return new StudentView(student.getId(), form.getName(), form.getEmail(),form.getAddress());
 
     }
 
     @Override
     public StudentView update(UpdateStudentForm form) {
 
+        studentDao.findById(form.getId()).setName(form.getName());
+        studentDao.findById(form.getId()).setEmail(form.getName());
+        studentDao.findById(form.getId()).setAddress(form.getName());
+
         Student student = studentDao.findById(form.getId());
         student.setName(form.getName());
         student.setEmail(form.getEmail());
         student.setAddress(form.getAddress());
+
+
+
         return new StudentView(student.getId(), student.getName(), student.getEmail(), student.getAddress());
     }
 
