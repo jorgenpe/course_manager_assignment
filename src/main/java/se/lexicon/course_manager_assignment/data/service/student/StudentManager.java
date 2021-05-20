@@ -94,7 +94,7 @@ public class StudentManager implements StudentService {
 
         while(courseDao.findAll().iterator().hasNext()){
 
-            courseDao.findAll().iterator().next().unrollStudent(student);
+            courseDao.findAll().iterator().next().unenrollStudent(student);
         }
 
         boolStudent = studentDao.removeStudent(student);

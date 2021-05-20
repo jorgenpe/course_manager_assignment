@@ -21,7 +21,7 @@ public class StudentTest {
     @Test
     void Students(){
 
-        Student result =new Student(StudentSequencer.nextStudentId(),"Olle", "f@hotmail.com", "Regeringsgatan 12");
+        Student result = new Student(StudentSequencer.nextStudentId(),"Olle", "f@hotmail.com", "Regeringsgatan 12");
         Student expected = new Student(result.getId(), result.getName(), result.getEmail(), result.getAddress());
 
         assertEquals(expected, result);

@@ -70,7 +70,7 @@ public class Course {
         return true;
     }
 
-    public boolean unrollStudent(Student student){
+    public boolean unenrollStudent(Student student){
 
         if(students == null){
             return false;

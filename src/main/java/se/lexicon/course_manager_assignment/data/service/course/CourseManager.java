@@ -78,7 +78,7 @@ public class CourseManager implements CourseService {
     @Override
     public boolean removeStudentFromCourse(int courseId, int studentId) {
 
-        return courseDao.findById(courseId).unrollStudent(studentDao.findById(studentId));
+        return courseDao.findById(courseId).unenrollStudent(studentDao.findById(studentId));
     }
 
     @Override
