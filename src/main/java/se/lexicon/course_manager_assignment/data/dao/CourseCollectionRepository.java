@@ -45,7 +45,7 @@ public class CourseCollectionRepository implements CourseDao{
     @Override
     public Collection<Course> findByNameContains(String name) {
 
-        Collection<Course> temp = new ArrayList<Course>();
+        Collection<Course> temp = new ArrayList<>();
 
         while(courses.iterator().hasNext()){
 
@@ -61,7 +61,7 @@ public class CourseCollectionRepository implements CourseDao{
     @Override
     public Collection<Course> findByDateBefore(LocalDate end) {
 
-        Collection<Course> temp = new ArrayList<Course>();
+        Collection<Course> temp = new ArrayList<>();
 
 
         while(courses.iterator().hasNext()){
@@ -80,7 +80,7 @@ public class CourseCollectionRepository implements CourseDao{
     @Override
     public Collection<Course> findByDateAfter(LocalDate start) {
 
-        Collection<Course> temp = new ArrayList<Course>();
+        Collection<Course> temp = new ArrayList<>();
 
         while(courses.iterator().hasNext()){
 
@@ -97,19 +97,19 @@ public class CourseCollectionRepository implements CourseDao{
     @Override
     public Collection<Course> findAll() {
 
-        return new ArrayList<Course>(courses);
+        return new ArrayList<>(courses);
     }
 
     @Override
     public Collection<Course> findByStudentId(int studentId) {
 
-        Collection<Course> temp = new ArrayList<Course>();
+        Collection<Course> temp = new ArrayList<>();
 
         while(courses.iterator().hasNext()){
 
             while(courses.iterator().next().getStudents().iterator().hasNext())
 
-                if(courses.iterator().next().getStudents().iterator().next().equals(studentId)){
+                if(courses.iterator().next().getStudents().iterator().next().getId() == (studentId)){
 
                     temp.add(courses.iterator().next());
 
