@@ -2,9 +2,11 @@ package se.lexicon.course_manager_assignment.data.dao;
 
 
 
+import se.lexicon.course_manager_assignment.data.sequencers.CourseSequencer;
 import se.lexicon.course_manager_assignment.model.Course;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -20,42 +22,109 @@ public class CourseCollectionRepository implements CourseDao{
 
     @Override
     public Course createCourse(String courseName, LocalDate startDate, int weekDuration) {
-        return null;
+
+
+         return new Course(CourseSequencer.nextCourseId(), courseName , startDate, weekDuration);
     }
 
     @Override
     public Course findById(int id) {
+
+        while(courses.iterator().hasNext()){
+
+            if(courses.iterator().next().getId() == id){
+
+                return courses.iterator().next();
+
+            }
+        }
+
         return null;
     }
 
     @Override
     public Collection<Course> findByNameContains(String name) {
-        return null;
+
+        Collection<Course> temp = new ArrayList<Course>();
+
+        while(courses.iterator().hasNext()){
+
+            if(courses.iterator().next().getCourseName().equals(name)){
+
+                 temp.add(courses.iterator().next());
+
+            }
+        }
+        return temp;
     }
 
     @Override
     public Collection<Course> findByDateBefore(LocalDate end) {
-        return null;
+
+        Collection<Course> temp = new ArrayList<Course>();
+
+
+        while(courses.iterator().hasNext()){
+
+
+            if(courses.iterator().next().getStartDate().equals(end.minusWeeks(courses.iterator().next().getWeekDuration()))){
+
+                temp.add(courses.iterator().next());
+
+            }
+        }
+
+        return temp;
     }
 
     @Override
     public Collection<Course> findByDateAfter(LocalDate start) {
-        return null;
+
+        Collection<Course> temp = new ArrayList<Course>();
+
+        while(courses.iterator().hasNext()){
+
+            if(courses.iterator().next().getStartDate().equals(start)){
+
+                temp.add(courses.iterator().next());
+
+            }
+        }
+
+        return temp;
     }
 
     @Override
     public Collection<Course> findAll() {
-        return null;
+
+        return new ArrayList<Course>(courses);
     }
 
     @Override
     public Collection<Course> findByStudentId(int studentId) {
-        return null;
+
+        Collection<Course> temp = new ArrayList<Course>();
+
+        while(courses.iterator().hasNext()){
+
+            while(courses.iterator().next().getStudents().iterator().hasNext())
+
+                if(courses.iterator().next().getStudents().iterator().next().equals(studentId)){
+
+                    temp.add(courses.iterator().next());
+
+                }
+        }
+
+        return temp;
+
     }
 
     @Override
     public boolean removeCourse(Course course) {
-        return false;
+
+        return courses.remove(course);
+
     }
 
     @Override

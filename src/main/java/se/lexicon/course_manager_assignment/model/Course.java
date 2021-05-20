@@ -16,6 +16,7 @@ public class Course {
         this.courseName = courseName;
         this.startDate = startDate;
         this.weekDuration = weekDuration;
+        this.students = null;
 
     }
 
