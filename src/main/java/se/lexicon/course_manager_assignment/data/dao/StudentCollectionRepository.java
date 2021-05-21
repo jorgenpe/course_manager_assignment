@@ -22,7 +22,15 @@ public class StudentCollectionRepository implements StudentDao {
     public Student createStudent(String name, String email, String address) {
 
 
-        return new Student(StudentSequencer.nextStudentId(), name, email, address);
+        Student temp = new Student(StudentSequencer.nextStudentId(), name, email, address);
+        if(!students.contains(temp)){
+
+            students.add(temp);
+
+        }
+
+
+        return temp;
     }
 
     @Override
@@ -30,11 +38,11 @@ public class StudentCollectionRepository implements StudentDao {
 
 
 
-        while(students.iterator().hasNext()){
+        for(Student m :students){
 
-            if(students.iterator().next().getEmail().equalsIgnoreCase(email)){
+            if(m.getEmail().equalsIgnoreCase(email)){
 
-                return students.iterator().next();
+                return m;
 
             }
 
@@ -48,11 +56,11 @@ public class StudentCollectionRepository implements StudentDao {
 
         Collection<Student> temp = new ArrayList<>();
 
-        while(students.iterator().hasNext()){
+        for(Student m : students){
 
-            if(students.iterator().next().getName().equals(name)){
+            if(m.getName().equals(name)){
 
-                temp.add(students.iterator().next());
+                temp.add(m);
 
             }
 
@@ -65,11 +73,11 @@ public class StudentCollectionRepository implements StudentDao {
     public Student findById(int id) {
 
 
-        while(students.iterator().hasNext()){
+        for(Student m :students){
 
-            if(students.iterator().next().getId() == id){
+            if(m.getId() == id){
 
-                return students.iterator().next();
+                return m;
 
             }
 
@@ -82,7 +90,7 @@ public class StudentCollectionRepository implements StudentDao {
     @Override
     public Collection<Student> findAll() {
 
-        return new ArrayList<>(students);
+        return new HashSet<>(students);
 
     }
 

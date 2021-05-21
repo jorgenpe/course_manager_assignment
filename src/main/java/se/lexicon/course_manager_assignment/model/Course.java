@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Course {
 
-    private int id;
+    private final int id;
     private String courseName;
     private LocalDate startDate;
     private int weekDuration;
@@ -16,7 +16,7 @@ public class Course {
         this.courseName = courseName;
         this.startDate = startDate;
         this.weekDuration = weekDuration;
-        this.students = null;
+
 
     }
 

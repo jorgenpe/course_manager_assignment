@@ -33,6 +33,10 @@ public class CourseManager implements CourseService {
 
         Course course = courseDao.createCourse(form.getCourseName(), form.getStartDate(), form.getWeekDuration());
 
+        if(course == null){
+            return null;
+        }
+
         return new CourseView(course.getId(), form.getCourseName(), form.getStartDate(), form.getWeekDuration(), null);
     }
 
@@ -85,13 +89,19 @@ public class CourseManager implements CourseService {
     public CourseView findById(int id) {
 
         Course course = courseDao.findById(id);
+        if(course == null){
+            return null;
+        }
 
-        return new CourseView(course.getId(), course.getCourseName(), course.getStartDate(), course.getWeekDuration(), converters.studentsToStudentViews(course.getStudents()));
+        return new CourseView(course.getId(), course.getCourseName(), course.getStartDate(), course.getWeekDuration(),converters.studentsToStudentViews(course.getStudents()) );
     }
 
     @Override
     public List<CourseView> findAll() {
 
+        if(courseDao.findAll() == null){
+            return null;
+        }
         return converters.coursesToCourseViews(courseDao.findAll());
     }
 

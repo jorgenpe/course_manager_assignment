@@ -1,1 +1,7 @@
-[]
+[ {
+  "id" : 5,
+  "courseName" : "Java",
+  "startDate" : "2021-05-29",
+  "weekDuration" : 5,
+  "students" : null
+} ]

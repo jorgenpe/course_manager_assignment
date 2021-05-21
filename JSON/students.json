@@ -1,1 +1,11 @@
-[]
+[ {
+  "id" : 1,
+  "name" : "Anna Olsson",
+  "email" : "f@hotmail.com",
+  "address" : "Regeringsgatan 14"
+}, {
+  "id" : 2,
+  "name" : "Anna Olsson",
+  "email" : "k@hotmail.com",
+  "address" : "Regeringsgatan 13"
+} ]

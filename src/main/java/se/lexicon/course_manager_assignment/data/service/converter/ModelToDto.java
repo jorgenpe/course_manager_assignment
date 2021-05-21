@@ -7,21 +7,26 @@ import se.lexicon.course_manager_assignment.model.Course;
 import se.lexicon.course_manager_assignment.model.Student;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Component
 public class ModelToDto implements Converters {
     @Override
     public StudentView studentToStudentView(Student student) {
-
+        if(student == null){
+            return null;
+        }
         return new StudentView(student.getId(), student.getName(), student.getEmail(), student.getAddress());
 
     }
 
     @Override
     public CourseView courseToCourseView(Course course) {
+
+
+        if(course == null){
+            return null;
+        }
 
         return new CourseView(course.getId(), course.getCourseName(), course.getStartDate(), course.getWeekDuration(), studentsToStudentViews(course.getStudents()));
 
@@ -30,12 +35,21 @@ public class ModelToDto implements Converters {
     @Override
     public List<CourseView> coursesToCourseViews(Collection<Course> courses) {
 
+        if(courses == null){
+            return null;
+        }
+
+
         List<CourseView> temp = new ArrayList<>();
 
-        while(courses.iterator().hasNext()){
+        for(Course m : courses){
 
-            temp.add(courseToCourseView(courses.iterator().next()));
+            temp.add(courseToCourseView(m));
         }
+
+
+
+
 
         return temp;
     }
@@ -43,11 +57,14 @@ public class ModelToDto implements Converters {
     @Override
     public List<StudentView> studentsToStudentViews(Collection<Student> students) {
 
+        if(students == null){
+            return null;
+        }
         List<StudentView> temp = new ArrayList<>();
 
-        while(students.iterator().hasNext()){
+        for(Student m : students){
 
-            temp.add(studentToStudentView(students.iterator().next()));
+            temp.add(studentToStudentView(m));
         }
         return temp;
     }

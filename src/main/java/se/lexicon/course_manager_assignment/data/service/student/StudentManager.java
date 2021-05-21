@@ -34,7 +34,10 @@ public class StudentManager implements StudentService {
     public StudentView create(CreateStudentForm form) {
 
         Student student = studentDao.createStudent(form.getName(), form.getEmail(),form.getAddress());
-        return new StudentView(student.getId(), form.getName(), form.getEmail(),form.getAddress());
+        StudentView temp = new StudentView(student.getId(), form.getName(), form.getEmail(),form.getAddress());
+
+        return temp;
+
 
     }
 
@@ -46,6 +49,9 @@ public class StudentManager implements StudentService {
         studentDao.findById(form.getId()).setAddress(form.getName());
 
         Student student = studentDao.findById(form.getId());
+        if(student == null){
+            return null;
+        }
         student.setName(form.getName());
         student.setEmail(form.getEmail());
         student.setAddress(form.getAddress());
@@ -58,9 +64,10 @@ public class StudentManager implements StudentService {
     @Override
     public StudentView findById(int id) {
 
-
         Student student = studentDao.findById(id);
-
+        if(student == null){
+            return null;
+        }
         return new StudentView(student.getId(), student.getName(), student.getEmail(), student.getAddress());
     }
 
@@ -69,6 +76,9 @@ public class StudentManager implements StudentService {
 
 
         Student student = studentDao.findByEmailIgnoreCase(email);
+        if(student == null){
+            return null;
+        }
 
         return new StudentView(student.getId(), student.getName(), student.getEmail(), student.getAddress());
     }

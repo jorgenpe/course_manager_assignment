@@ -4,6 +4,7 @@ package se.lexicon.course_manager_assignment.data.dao;
 
 import se.lexicon.course_manager_assignment.data.sequencers.CourseSequencer;
 import se.lexicon.course_manager_assignment.model.Course;
+import se.lexicon.course_manager_assignment.model.Student;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,19 +23,23 @@ public class CourseCollectionRepository implements CourseDao{
 
     @Override
     public Course createCourse(String courseName, LocalDate startDate, int weekDuration) {
+        int sTemp = CourseSequencer.nextCourseId();
 
 
-         return new Course(CourseSequencer.nextCourseId(), courseName , startDate, weekDuration);
+        Course temp = new Course(sTemp, courseName , startDate, weekDuration);
+        courses.add(temp);
+         return temp;
     }
 
     @Override
     public Course findById(int id) {
 
-        while(courses.iterator().hasNext()){
 
-            if(courses.iterator().next().getId() == id){
+        for(Course m : courses){
 
-                return courses.iterator().next();
+            if(m.getId() == id){
+
+                return m;
 
             }
         }
@@ -47,11 +52,11 @@ public class CourseCollectionRepository implements CourseDao{
 
         Collection<Course> temp = new ArrayList<>();
 
-        while(courses.iterator().hasNext()){
+        for(Course m : courses){
 
-            if(courses.iterator().next().getCourseName().equals(name)){
+            if(m.getCourseName().equals(name)){
 
-                 temp.add(courses.iterator().next());
+                 temp.add(m);
 
             }
         }
@@ -64,12 +69,12 @@ public class CourseCollectionRepository implements CourseDao{
         Collection<Course> temp = new ArrayList<>();
 
 
-        while(courses.iterator().hasNext()){
+        for(Course m : courses){
 
 
-            if(courses.iterator().next().getStartDate().equals(end.minusWeeks(courses.iterator().next().getWeekDuration()))){
+            if(m.getStartDate().equals(end.minusWeeks(m.getWeekDuration()))){
 
-                temp.add(courses.iterator().next());
+                temp.add(m);
 
             }
         }
@@ -82,11 +87,11 @@ public class CourseCollectionRepository implements CourseDao{
 
         Collection<Course> temp = new ArrayList<>();
 
-        while(courses.iterator().hasNext()){
+        for(Course m : courses){
 
-            if(courses.iterator().next().getStartDate().equals(start)){
+            if(m.getStartDate().equals(start)){
 
-                temp.add(courses.iterator().next());
+                        temp.add(m);
 
             }
         }
@@ -97,7 +102,9 @@ public class CourseCollectionRepository implements CourseDao{
     @Override
     public Collection<Course> findAll() {
 
-        return new ArrayList<>(courses);
+
+
+        return new HashSet<>(courses);
     }
 
     @Override
@@ -105,13 +112,13 @@ public class CourseCollectionRepository implements CourseDao{
 
         Collection<Course> temp = new ArrayList<>();
 
-        while(courses.iterator().hasNext()){
+        for(Course m : courses){
 
-            while(courses.iterator().next().getStudents().iterator().hasNext())
+            for(Student n : m.getStudents())
 
-                if(courses.iterator().next().getStudents().iterator().next().getId() == (studentId)){
+                if(n.getId() == (studentId)){
 
-                    temp.add(courses.iterator().next());
+                    temp.add(m);
 
                 }
         }

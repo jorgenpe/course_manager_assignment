@@ -100,6 +100,22 @@ public class CourseTest {
         assertFalse(result);
     }
 
+    @Test
+    void equals(){
+
+        assertTrue(course.equals(course));
+
+    }
+
+    @Test
+    void equals2(){
+
+        Course testCourse = new Course(CourseSequencer.nextCourseId(), " Java next", LocalDate.of(2021,8,28), 6);
+
+        assertFalse(course.equals(testCourse));
+
+    }
+
 
 
 }
