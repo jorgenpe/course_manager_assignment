@@ -49,10 +49,20 @@ public class Course {
     }
 
     public Collection<Student> getStudents() {
+
+        if(students == null){
+            students = new HashSet<>();
+        }
+
         return students;
     }
 
     public void setStudents(Collection<Student> students) {
+
+        if(students == null){
+            students = new HashSet<>();
+        }
+
         this.students = students;
     }
 

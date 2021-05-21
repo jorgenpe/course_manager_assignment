@@ -39,17 +39,12 @@ public class ModelToDto implements Converters {
             return null;
         }
 
-
         List<CourseView> temp = new ArrayList<>();
 
         for(Course m : courses){
 
             temp.add(courseToCourseView(m));
         }
-
-
-
-
 
         return temp;
     }

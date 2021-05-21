@@ -9,6 +9,7 @@ import se.lexicon.course_manager_assignment.data.service.converter.ModelToDto;
 import se.lexicon.course_manager_assignment.dto.forms.CreateStudentForm;
 import se.lexicon.course_manager_assignment.dto.forms.UpdateStudentForm;
 import se.lexicon.course_manager_assignment.dto.views.StudentView;
+import se.lexicon.course_manager_assignment.model.Course;
 import se.lexicon.course_manager_assignment.model.Student;
 
 
@@ -101,11 +102,7 @@ public class StudentManager implements StudentService {
         boolean boolStudent;
 
         Student student = studentDao.findById(id);
-
-        while(courseDao.findAll().iterator().hasNext()){
-
-            courseDao.findAll().iterator().next().unenrollStudent(student);
-        }
+        courseDao.findByStudentId(id).remove(student);
 
         boolStudent = studentDao.removeStudent(student);
         if(boolStudent){
