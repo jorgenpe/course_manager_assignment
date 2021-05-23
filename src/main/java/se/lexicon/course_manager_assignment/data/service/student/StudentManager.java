@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import se.lexicon.course_manager_assignment.data.dao.CourseDao;
 import se.lexicon.course_manager_assignment.data.dao.StudentDao;
 import se.lexicon.course_manager_assignment.data.service.converter.Converters;
-import se.lexicon.course_manager_assignment.data.service.converter.ModelToDto;
 import se.lexicon.course_manager_assignment.dto.forms.CreateStudentForm;
 import se.lexicon.course_manager_assignment.dto.forms.UpdateStudentForm;
 import se.lexicon.course_manager_assignment.dto.views.StudentView;
@@ -13,9 +12,8 @@ import se.lexicon.course_manager_assignment.model.Course;
 import se.lexicon.course_manager_assignment.model.Student;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+
 
 @Service
 public class StudentManager implements StudentService {
@@ -35,9 +33,8 @@ public class StudentManager implements StudentService {
     public StudentView create(CreateStudentForm form) {
 
         Student student = studentDao.createStudent(form.getName(), form.getEmail(),form.getAddress());
-        StudentView temp = new StudentView(student.getId(), form.getName(), form.getEmail(),form.getAddress());
 
-        return temp;
+        return new StudentView(student.getId(), form.getName(), form.getEmail(),form.getAddress());
 
 
     }
@@ -45,21 +42,31 @@ public class StudentManager implements StudentService {
     @Override
     public StudentView update(UpdateStudentForm form) {
 
-        studentDao.findById(form.getId()).setName(form.getName());
-        studentDao.findById(form.getId()).setEmail(form.getName());
-        studentDao.findById(form.getId()).setAddress(form.getName());
+        List<Student> tempStudents = new ArrayList<>(studentDao.findAll());
 
         Student student = studentDao.findById(form.getId());
-        if(student == null){
-            return null;
-        }
-        student.setName(form.getName());
-        student.setEmail(form.getEmail());
-        student.setAddress(form.getAddress());
 
+
+        for(Student m : tempStudents){
+
+            if(m.equals(student)){
+
+                m.setName(form.getName());
+                m.setEmail(form.getEmail());
+                m.setAddress(form.getAddress());
+            }
+        }
+
+        studentDao.clear();
+
+        studentDao.findAll().addAll(new HashSet<>(tempStudents));
+
+        student = studentDao.findById(form.getId());
 
 
         return new StudentView(student.getId(), student.getName(), student.getEmail(), student.getAddress());
+
+
     }
 
     @Override
@@ -99,16 +106,18 @@ public class StudentManager implements StudentService {
 
     @Override
     public boolean deleteStudent(int id) {
-        boolean boolStudent;
+
 
         Student student = studentDao.findById(id);
-        courseDao.findByStudentId(id).remove(student);
 
-        boolStudent = studentDao.removeStudent(student);
-        if(boolStudent){
-            return true;
+        if(!studentDao.findAll().isEmpty()) {
+            for (Course m : courseDao.findAll()) {
+
+                m.unenrollStudent(student);
+
+            }
         }
 
-        return false;
+        return studentDao.removeStudent(student);
     }
 }

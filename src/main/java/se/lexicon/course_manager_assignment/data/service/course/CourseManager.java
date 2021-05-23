@@ -12,6 +12,8 @@ import se.lexicon.course_manager_assignment.model.Course;
 
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -43,11 +45,25 @@ public class CourseManager implements CourseService {
     @Override
     public CourseView update(UpdateCourseForm form) {
 
-        courseDao.findById(form.getId()).setCourseName(form.getCourseName());
-        courseDao.findById(form.getId()).setStartDate(form.getStartDate());
-        courseDao.findById(form.getId()).setWeekDuration(form.getWeekDuration());
+        List<Course> tempCourse = new ArrayList<>(courseDao.findAll());
+        Course course = courseDao.findById(form.getId());
 
-        return new CourseView(form.getId(),form.getCourseName(),form.getStartDate(), form.getWeekDuration(),converters.studentsToStudentViews(courseDao.findById(form.getId()).getStudents())) ;
+
+        for(Course m : tempCourse){
+
+            if(m.equals(course)){
+                m.setCourseName(form.getCourseName());
+                m.setStartDate(form.getStartDate());
+                m.setWeekDuration(form.getWeekDuration());
+            }
+        }
+
+        courseDao.clear();
+        courseDao.findAll().addAll(new HashSet<>(tempCourse)) ;
+
+        course = courseDao.findById(form.getId());
+
+        return new CourseView(course.getId(),course.getCourseName(),course.getStartDate(), course.getWeekDuration(),converters.studentsToStudentViews(course.getStudents())) ;
 
     }
 

@@ -24,7 +24,9 @@ public class CourseCollectionRepository implements CourseDao{
     @Override
     public Course createCourse(String courseName, LocalDate startDate, int weekDuration) {
 
-        Course temp = new Course(CourseSequencer.nextCourseId(), courseName , startDate, weekDuration);
+        int tempSequencer = CourseSequencer.nextCourseId();
+
+        Course temp = new Course(tempSequencer, courseName , startDate, weekDuration);
 
         if(!courses.contains(temp)){
 
@@ -105,7 +107,7 @@ public class CourseCollectionRepository implements CourseDao{
     @Override
     public Collection<Course> findAll() {
 
-        return new HashSet<>(courses);
+        return courses;
 
     }
 
@@ -131,6 +133,7 @@ public class CourseCollectionRepository implements CourseDao{
 
     @Override
     public boolean removeCourse(Course course) {
+
 
         return courses.remove(course);
 

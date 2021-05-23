@@ -21,8 +21,8 @@ public class StudentCollectionRepository implements StudentDao {
     @Override
     public Student createStudent(String name, String email, String address) {
 
-
-        Student temp = new Student(StudentSequencer.nextStudentId(), name, email, address);
+        int tempSequencer = StudentSequencer.nextStudentId();
+        Student temp = new Student(tempSequencer, name, email, address);
         if(!students.contains(temp)){
 
             students.add(temp);
@@ -90,7 +90,7 @@ public class StudentCollectionRepository implements StudentDao {
     @Override
     public Collection<Student> findAll() {
 
-        return new HashSet<>(students);
+        return students;
 
     }
 
