@@ -39,7 +39,7 @@ public class CourseManager implements CourseService {
             return null;
         }
 
-        return new CourseView(course.getId(), form.getCourseName(), form.getStartDate(), form.getWeekDuration(), null);
+        return new CourseView(course.getId(), form.getCourseName(), form.getStartDate(), form.getWeekDuration(), converters.studentsToStudentViews(new HashSet<>()));
     }
 
     @Override
