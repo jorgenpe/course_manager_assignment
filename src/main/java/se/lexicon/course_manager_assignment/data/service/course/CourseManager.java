@@ -42,6 +42,8 @@ public class CourseManager implements CourseService {
         return new CourseView(course.getId(), form.getCourseName(), form.getStartDate(), form.getWeekDuration(), converters.studentsToStudentViews(new HashSet<>()));
     }
 
+    // In update we create a new ArrayList and copy in the collection courseDao. We do this to be able to update the collection.
+    // When ArrayList is updated the old list is deleted and the ArrayList is transformed to a Collection again.
     @Override
     public CourseView update(UpdateCourseForm form) {
 

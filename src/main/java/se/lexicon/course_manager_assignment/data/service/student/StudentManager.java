@@ -39,7 +39,7 @@ public class StudentManager implements StudentService {
 
     }
 
-    // In update we create a new ArrayList and copy in the collection studentDao. we do this to be able to update the collection.
+    // In update we create a new ArrayList and copy in the collection studentDao. We do this to be able to update the collection.
     // When ArrayList is updated the old list is deleted and the ArrayList is transformed to a Collection again.
     @Override
     public StudentView update(UpdateStudentForm form) {
