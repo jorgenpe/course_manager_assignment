@@ -46,7 +46,12 @@ public class CourseManagerTest {
 
         CourseSequencer.setCourseSequencer(0);
         StudentSequencer.setStudentSequencer(0);
+
+        CreateCourseForm form = new CreateCourseForm();
         courseDao.clear();
+
+
+
 
     }
 
@@ -173,11 +178,12 @@ public class CourseManagerTest {
     @Test
     void addStudentToCourse(){
 
-        Student student = new Student(1, "Anna", "f@hotmail.com", "Regeringsgatan 5" );
-        Collection<Student> students = new HashSet<>();
-        students.add(student);
-        Converters convert;
-        StudentDao studentDao = new StudentCollectionRepository(students);
+        Converters convert = new ModelToDto();
+        StudentDao studentDao = new StudentCollectionRepository(new HashSet<>());
+        studentDao.createStudent("Anna", "f@hotmail.com", "Regeringsgatan 5");
+        courseDao.clear();
+        testObject = new CourseManager(courseDao,studentDao,convert);
+
         CreateCourseForm form = new CreateCourseForm();
 
         form.setCourseName("Java");
@@ -195,16 +201,18 @@ public class CourseManagerTest {
     @Test
     void removeStudentFromCourse(){
 
-        Student student = new Student(1, "Anna", "f@hotmail.com", "Regeringsgatan 5" );
-        Collection<Student> students = new HashSet<>();
-        students.add(student);
-        Converters convert;
-        StudentDao studentDao = new StudentCollectionRepository(students);
-        CreateCourseForm form = new CreateCourseForm();
+        Converters convert = new ModelToDto();
+        StudentDao studentDao = new StudentCollectionRepository(new HashSet<>());
+        studentDao.createStudent("Anna", "f@hotmail.com", "Regeringsgatan 5");
+        courseDao.clear();
+        testObject = new CourseManager(courseDao,studentDao,convert);
 
+
+        CreateCourseForm form = new CreateCourseForm();
         form.setCourseName("Java");
         form.setStartDate(LocalDate.of(2021,6,6));
         form.setWeekDuration(4);
+
 
         testObject.create(form);
 
@@ -259,10 +267,14 @@ public class CourseManagerTest {
     @Test
     void findByStudentId(){
 
-        /*CreateCourseForm form = new CreateCourseForm();
+        Converters convert = new ModelToDto();
+        StudentDao studentDao = new StudentCollectionRepository(new HashSet<>());
+        studentDao.createStudent("Anna", "f@hotmail.com", "Regeringsgatan 5");
+        courseDao.clear();
+        testObject = new CourseManager(courseDao,studentDao,convert);
 
-        Collection<StudentView> temp = new HashSet<>();
-        temp.add(new StudentView(1,"Anna","f@hotmail.com","Regeringsgatan 5"));
+        CreateCourseForm form = new CreateCourseForm();
+
 
         form.setCourseName("Java");
         form.setStartDate(LocalDate.of(2021,6,6));
@@ -274,17 +286,30 @@ public class CourseManagerTest {
         form.setWeekDuration(1);
 
         testObject.create(form);
-        testObject.findAll().get(0).getStudents().addAll(temp);
-        testObject.findAll().get(1).getStudents().addAll(temp);
-
-
-
-        System.out.println(testObject.findAll().get(0).getStudents().get(0).getEmail());
+        testObject.addStudentToCourse(1,1);
 
         List<CourseView> result = testObject.findByStudentId(1);
-        int expected = 2;
+        int expected = 1;
 
-        assertEquals(expected, result.size());*/
+        assertEquals(expected, result.size());
+
+    }
+
+    @Test
+    void deleteCourse(){
+
+        CreateCourseForm form = new CreateCourseForm();
+
+
+        form.setCourseName("Java");
+        form.setStartDate(LocalDate.of(2021,6,6));
+        form.setWeekDuration(4);
+
+        testObject.create(form);
+
+        boolean result = testObject.deleteCourse(2);
+
+        assertFalse(result);
 
     }
 

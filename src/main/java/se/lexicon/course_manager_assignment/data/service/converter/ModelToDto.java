@@ -12,7 +12,9 @@ import java.util.*;
 @Component
 public class ModelToDto implements Converters {
 
+    public ModelToDto(){
 
+    }
 
     @Override
     public StudentView studentToStudentView(Student student) {
